@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\API\User;
-use App\Http\Controllers\ApiController;
+use App\Http\Controllers\API\ApiController;
 use Illuminate\Http\Request;
 use App\Models\user;
 use Hash;
@@ -17,7 +17,7 @@ class UserController extends ApiController
     {
         //return ["result"=>"data list"];
         $users = User::all();
-        return response()->json(['data'=>$users],200);
+        return $this->showAll($users);
 
     }
 
@@ -51,7 +51,7 @@ class UserController extends ApiController
         $data['verification_token'] = User::generateVerificationCode();
         $data['admin'] = User::REGULAR_USER;
         $user = User::create($data);
-        return response()->json(['data'=>$user], 200);
+        return $this->showOne($user,201);
     }
 
     /**
@@ -63,7 +63,7 @@ class UserController extends ApiController
     public function show($id)
     {
         $user=User::findOrFail($id);
-        return response()->json(['data'=>$user],200);
+        return $this->showOne($user);
     }
 
     /**
@@ -117,7 +117,7 @@ class UserController extends ApiController
             return response()->json(['error'=>'You Need to Specify a different Value to Update','code'=>422],422);
         }
         $user->save();
-        return response()->json(['data'=>$user],200);
+        return $this->showOne($user);
     }
 
     /**
@@ -130,6 +130,6 @@ class UserController extends ApiController
     {
         $user=User::findorFail($id);
         $user->delete();
-        return response()->json(['data'=>$user],200);
+        return $this->showOne($user);
     }
 }

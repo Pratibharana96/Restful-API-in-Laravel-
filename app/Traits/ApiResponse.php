@@ -1,10 +1,11 @@
 <?php
 namespace App\Traits;
-use Illuminate\Support\Colection;
+use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
 trait ApiResponse
 {
 
-    private function succcessResponse($data,$code)
+    private function successResponse($data,$code)
     {
         return response()->json($data,$code);
     }
